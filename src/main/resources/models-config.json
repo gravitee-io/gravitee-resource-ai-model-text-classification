@@ -1,0 +1,66 @@
+{
+    "minuva/MiniLMv2-toxic-jigsaw-onnx": {
+        "files": [
+            {
+                "name": "model_optimized_quantized.onnx",
+                "type": "MODEL"
+            },
+            {
+                "name": "tokenizer.json",
+                "type": "TOKENIZER"
+            },
+            {
+                "name": "config.json",
+                "type": "CONFIG"
+            }
+        ]
+    },
+    "gravitee-io/detoxify-onnx": {
+        "files": [
+            {
+                "name": "model.quant.onnx",
+                "type": "MODEL"
+            },
+            {
+                "name": "tokenizer.json",
+                "type": "TOKENIZER"
+            },
+            {
+                "name": "config.json",
+                "type": "CONFIG"
+            }
+        ]
+    },
+    "gravitee-io/Llama-Prompt-Guard-2-22M-onnx": {
+        "files": [
+            {
+                "name": "model.quant.onnx",
+                "type": "MODEL"
+            },
+            {
+                "name": "tokenizer.json",
+                "type": "TOKENIZER"
+            },
+            {
+                "name": "config.json",
+                "type": "CONFIG"
+            }
+        ]
+    },
+    "gravitee-io/Llama-Prompt-Guard-2-86M-onnx": {
+        "files": [
+            {
+                "name": "model.quant.onnx",
+                "type": "MODEL"
+            },
+            {
+                "name": "tokenizer.json",
+                "type": "TOKENIZER"
+            },
+            {
+                "name": "config.json",
+                "type": "CONFIG"
+            }
+        ]
+    }
+}

@@ -1,0 +1,54 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "definitions": {
+        "model": {
+            "type": "string",
+            "title": "Select model",
+            "oneOf": [
+                {
+                    "title": "minuva/MiniLMv2-toxic-jigsaw-onnx",
+                    "properties": {
+                        "id": {
+                            "const": "minuva/MiniLMv2-toxic-jigsaw-onnx"
+                        }
+                    },
+                    "required": ["id"]
+                },
+                {
+                    "title": "gravitee-io/detoxify-onnx",
+                    "properties": {
+                        "id": {
+                            "const": "gravitee-io/detoxify-onnx"
+                        }
+                    },
+                    "required": ["id"]
+                },
+                {
+                    "title": "gravitee-io/Llama-Prompt-Guard-2-22M-onnx",
+                    "properties": {
+                        "id": {
+                            "const": "gravitee-io/Llama-Prompt-Guard-2-22M-onnx"
+                        }
+                    },
+                    "required": ["id"]
+                },
+                {
+                    "title": "gravitee-io/Llama-Prompt-Guard-2-86M-onnx",
+                    "properties": {
+                        "id": {
+                            "const": "gravitee-io/Llama-Prompt-Guard-2-86M-onnx"
+                        }
+                    },
+                    "required": ["id"]
+                }
+            ]
+        }
+    },
+    "properties": {
+        "model": {
+            "$ref": "#/definitions/model"
+        }
+    },
+    "required": ["model"]
+}
