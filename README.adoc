@@ -1,21 +1,21 @@
-= Confluent Schema Registry Resource
+= AI Model Text Classification Resource
 
 ifdef::env-github[]
-image:https://img.shields.io/static/v1?label=Available%20at&message=Gravitee.io&color=1EC9D2["Gravitee.io", link="https://download.gravitee.io/#graviteeio-ee/apim/plugins/resources/gravitee-resource-schema-registry-confluent/"]
-image:https://img.shields.io/badge/License-Apache%202.0-blue.svg["License", link="https://github.com/gravitee-io/gravitee-resource-schema-registry-confluent/blob/master/LICENSE.txt"]
-image:https://img.shields.io/badge/semantic--release-conventional%20commits-e10079?logo=semantic-release["Releases", link="https://github.com/gravitee-io/gravitee-resource-schema-registry-confluent/releases"]
-image:https://f.hubspotusercontent40.net/hubfs/7600448/gravitee-github-button.jpg["Join the community forum", link="https://community.gravitee.io?utm_source=readme", height=20]
+image:https://img.shields.io/static/v1?label=Available%20at&message=Gravitee.io&color=1EC9D2["Gravitee.io",link="https://download.gravitee.io/#graviteeio-ee/apim/plugins/resources/gravitee-resource-ai-model-text-classification/"]
+image:https://img.shields.io/badge/License-Apache%202.0-blue.svg["License",link="https://github.com/gravitee-io/gravitee-resource-ai-model-text-classification/blob/master/LICENSE.txt"]
+image:https://img.shields.io/badge/semantic--release-conventional%20commits-e10079?logo=semantic-release["Releases",link="https://github.com/gravitee-io/gravitee-resource-ai-model-text-classification/releases"]
+image:https://dl.circleci.com/status-badge/img/gh/gravitee-io/gravitee-resource-ai-model-text-classification/tree/main.svg?style=svg["CircleCI",link="https://dl.circleci.com/status-badge/redirect/gh/gravitee-io/gravitee-resource-ai-model-text-classification/tree/main"]
+image:https://f.hubspotusercontent40.net/hubfs/7600448/gravitee-github-button.jpg["Join the community forum",link="https://community.gravitee.io?utm_source=readme", height=20]
 endif::[]
 
 == Description
 
-The resource is used to fetch and invoke a toxicity classification model for Gravitee Policy
+The resource is used to fetch and invoke a text classification model for Gravitee gateway policies
 
 == Compatibility
 
-
 |===
-| Classification Toxicity resource plugin | APIM
+| AI Model Text Classification Resource plugin | APIM
 
 | 1.x
 | 4.8.x
