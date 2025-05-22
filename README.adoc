@@ -10,7 +10,7 @@ endif::[]
 
 == Description
 
-The resource is used to fetch and invoke a text classification model for Gravitee gateway policies
+The resource is used to fetch and invoke a text classification model for Gravitee gateway policies. Models are fetched from Hugging Face.
 
 == Compatibility
 
@@ -20,3 +20,26 @@ The resource is used to fetch and invoke a text classification model for Gravite
 | 1.x
 | 4.8.x
 |===
+
+== Notice
+
+This plugin exposes models based on meta LLama 4:
+
+* link:https://huggingface.co/gravitee-io/Llama-Prompt-Guard-2-22M-onnx[gravitee-io/Llama-Prompt-Guard-2-22M-onnx]
+* link:https://huggingface.co/gravitee-io/Llama-Prompt-Guard-2-86M-onnx[gravitee-io/Llama-Prompt-Guard-2-86M-onnx]
+
+``Llama 4 is licensed under the Llama 4 Community License, Copyright © Meta Platforms, Inc. All Rights Reserved.``
+
+== Available models
+
+The AI model text classification resource provides the following models:
+
+- link:https://huggingface.co/minuva/MiniLMv2-toxic-jigsaw-onnx[minuva/MiniLMv2-toxic-jigsaw-onnx]
+- link:https://huggingface.co/gravitee-io/detoxify-onnx[gravitee-io/detoxify-onnx]
+- link:https://huggingface.co/gravitee-io/distilbert-multilingual-toxicity-classifier[gravitee-io/distilbert-multilingual-toxicity-classifier]
+- link:https://huggingface.co/gravitee-io/Llama-Prompt-Guard-2-22M-onnx[gravitee-io/Llama-Prompt-Guard-2-22M-onnx]
+- link:https://huggingface.co/gravitee-io/Llama-Prompt-Guard-2-86M-onnx[gravitee-io/Llama-Prompt-Guard-2-86M-onnx]
+
+NOTE: The models are not included in the resource package. The resource automatically downloads the models from Hugging Face when they are not available locally. The Models files are stored in `$GRAVITEE_HOME/models` directory. Ensure that the user that runs the Gateway can write in that directory.
+
+WARNING: Models are loaded in memory. You may need to increase the memory (Java Heap size and Kubernetes resource limits) of the Gateway to avoid any OutOfMemory error. The increase depends on the model size and the number of APIs that use the resource.
