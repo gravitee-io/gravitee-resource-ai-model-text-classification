@@ -36,7 +36,7 @@
     </description>
 
     <properties>
-        <gravitee-bom.version>8.2.22</gravitee-bom.version>
+        <gravitee-bom.version>8.3.0</gravitee-bom.version>
 
         <maven-plugin-assembly.version>3.7.1</maven-plugin-assembly.version>
         <!-- Property used by the publication job in CI-->
