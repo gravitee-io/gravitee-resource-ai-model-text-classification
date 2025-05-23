@@ -27,17 +27,22 @@
         <version>23.0.0</version>
     </parent>
 
-    <groupId>com.graviteesource.resource</groupId>
-    <artifactId>gravitee-resource-ai-model-classification-toxicity</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <groupId>io.gravitee.resource</groupId>
+    <artifactId>gravitee-resource-ai-model-text-classification</artifactId>
+    <version>0.0.1-alpha.1</version>
 
-    <name>Gravitee.io APIM - Resource - AI Model - Classification Toxicity</name>
-    <description>The resource is used to fetch and invoke a toxicity classification model for Gravitee Policy
-    </description>
+    <name>Gravitee.io APIM - Resource - AI Model - Text Classification</name>
+    <description>The resource is used to fetch and invoke a text classification model for Gravitee Policy</description>
 
     <properties>
         <gravitee-bom.version>8.2.22</gravitee-bom.version>
+        <gravitee-common.version>4.7.0</gravitee-common.version>
+        <gravitee-node.version>5.21.2</gravitee-node.version>
+        <gravitee-resource-api.version>1.1.0</gravitee-resource-api.version>
+        <gravitee-resource-ai-model-api.version>1.0.0-apim-8987-SNAPSHOT</gravitee-resource-ai-model-api.version>
+        <gravitee-inference-service.version>1.1.0</gravitee-inference-service.version>
 
+        <maven-plugin-properties.version>1.2.1</maven-plugin-properties.version>
         <maven-plugin-assembly.version>3.7.1</maven-plugin-assembly.version>
         <!-- Property used by the publication job in CI-->
         <publish-folder-path>graviteeio-ee/apim/plugins/resources</publish-folder-path>
@@ -53,11 +58,96 @@
                 <scope>import</scope>
                 <type>pom</type>
             </dependency>
+            <dependency>
+                <groupId>io.gravitee.node</groupId>
+                <artifactId>gravitee-node</artifactId>
+                <version>${gravitee-node.version}</version>
+                <scope>import</scope>
+                <type>pom</type>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
+    <dependencies>
+        <!-- Gravitee.io API-->
+        <dependency>
+            <groupId>io.gravitee.node</groupId>
+            <artifactId>gravitee-node-vertx</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.gravitee.common</groupId>
+            <artifactId>gravitee-common</artifactId>
+            <version>${gravitee-common.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.gravitee.resource</groupId>
+            <artifactId>gravitee-resource-api</artifactId>
+            <version>${gravitee-resource-api.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.gravitee.resource</groupId>
+            <artifactId>gravitee-resource-ai-model-api</artifactId>
+            <version>${gravitee-resource-ai-model-api.version}</version>
+        </dependency>
+
+        <!-- Spring -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.gravitee.inference.service</groupId>
+            <artifactId>gravitee-inference-service</artifactId>
+            <version>${gravitee-inference-service.version}</version>
+        </dependency>
+
+        <!-- Vert.x dependencies -->
+        <dependency>
+            <groupId>io.vertx</groupId>
+            <artifactId>vertx-rx-java3</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.vertx</groupId>
+            <artifactId>vertx-web-client</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+
+    </dependencies>
+
     <build>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
         <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>properties-maven-plugin</artifactId>
+                <version>${maven-plugin-properties.version}</version>
+                <executions>
+                    <execution>
+                        <phase>initialize</phase>
+                        <id>load-plugin-properties</id>
+                        <goals>
+                            <goal>read-project-properties</goal>
+                        </goals>
+                        <configuration>
+                            <files>
+                                <file>${project.basedir}/src/main/resources/plugin.properties</file>
+                            </files>
+                            <quiet>false</quiet>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-assembly-plugin</artifactId>
