@@ -1,0 +1,57 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {
+        "model": {
+            "type": "object",
+            "title": "Select model",
+            "oneOf": [
+                {
+                    "title": "minuva/MiniLMv2-toxic-jigsaw-onnx",
+                    "properties": {
+                        "type": {
+                            "const": "MINILMV2_TOXIC_JIGSAW_MODEL"
+                        }
+                    },
+                    "required": ["type"]
+                },
+                {
+                    "title": "gravitee-io/detoxify-onnx",
+                    "properties": {
+                        "type": {
+                            "const": "GRAVITEE_DETOXIFY_ONNX_MODEL"
+                        }
+                    },
+                    "required": ["type"]
+                },
+                {
+                    "title": "gravitee-io/distilbert-multilingual-toxicity-classifier",
+                    "properties": {
+                        "type": {
+                            "const": "GRAVITEE_IO_DISTILBERT_MULTILINGUAL_TOXICITY_CLASSIFIER"
+                        }
+                    },
+                    "required": ["type"]
+                },
+                {
+                    "title": "gravitee-io/Llama-Prompt-Guard-2-22M-onnx",
+                    "properties": {
+                        "type": {
+                            "const": "GRAVITEE_LLAMA_PROMPT_GUARD_22M_MODEL"
+                        }
+                    },
+                    "required": ["type"]
+                },
+                {
+                    "title": "gravitee-io/Llama-Prompt-Guard-2-86M-onnx",
+                    "properties": {
+                        "type": {
+                            "const": "GRAVITEE_LLAMA_PROMPT_GUARD_86M_MODEL"
+                        }
+                    },
+                    "required": ["type"]
+                }
+            ]
+        }
+    }
+}
