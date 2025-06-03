@@ -42,14 +42,14 @@ public enum ModelEnum {
         "config.json"
     ),
     GRAVITEE_LLAMA_PROMPT_GUARD_22M_MODEL(
-        "LLAMA_PROMPT_GUARD_22M_MODEL",
+        "GRAVITEE_LLAMA_PROMPT_GUARD_22M_MODEL",
         "gravitee-io/Llama-Prompt-Guard-2-22M-onnx",
         "model.quant.onnx",
         "tokenizer.json",
         "config.json"
     ),
     GRAVITEE_LLAMA_PROMPT_GUARD_86M_MODEL(
-        "LLAMA_PROMPT_GUARD_86M_MODEL",
+        "GRAVITEE_LLAMA_PROMPT_GUARD_86M_MODEL",
         "gravitee-io/Llama-Prompt-Guard-2-86M-onnx",
         "model.quant.onnx",
         "tokenizer.json",
