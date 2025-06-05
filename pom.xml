@@ -138,10 +138,9 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <scope>provided</scope>
+            <scope>compile</scope>
         </dependency>
 
-        <!-- Test -->
         <dependency>
             <groupId>io.vertx</groupId>
             <artifactId>vertx-junit5-rx-java3</artifactId>
@@ -184,14 +183,19 @@
             <version>${gravitee-inference-service.version}</version>
             <scope>test</scope>
         </dependency>
-
-
     </dependencies>
 
     <build>
         <resources>
             <resource>
                 <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+            <resource>
+                <directory>${project.basedir}</directory>
+                <includes>
+                    <include>NOTICE.txt</include>
+                </includes>
                 <filtering>true</filtering>
             </resource>
         </resources>
