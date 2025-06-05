@@ -15,7 +15,6 @@
  */
 package io.gravitee.resource.ai_model;
 
-import io.gravitee.inference.service.InferenceService;
 import io.gravitee.resource.ai_model.api.AiTextClassificationModelResource;
 import io.gravitee.resource.ai_model.api.ClassifierResults;
 import io.gravitee.resource.ai_model.api.model.PromptInput;
@@ -47,9 +46,9 @@ public class TextClassificationAiModelResource
     private Path modelDirectory;
 
     private ApplicationContext applicationContext;
-    private InferenceServiceClient inferenceServiceClient;
     private HuggingFaceDownloaderService huggingFaceDownloaderService;
     private Vertx vertx;
+    private InferenceServiceClient inferenceServiceClient;
 
     @Override
     protected void doStart() throws Exception {
@@ -61,10 +60,7 @@ public class TextClassificationAiModelResource
         this.modelDirectory = Files.createTempDirectory(modelName.replace("/", "-"));
 
         this.vertx = applicationContext.getBean(Vertx.class);
-
-        var inferenceService = new InferenceService(vertx);
-        this.inferenceServiceClient = new InferenceServiceClient(vertx, inferenceService);
-        inferenceServiceClient.initialize();
+        this.inferenceServiceClient = new InferenceServiceClient(vertx);
 
         var huggingFaceWebClient = HuggingFaceWebClientFactory.createDefaultClient(vertx);
         var vertxHuggingFaceClientRx = new VertxHuggingFaceClientRx(huggingFaceWebClient);

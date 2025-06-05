@@ -15,6 +15,7 @@
  */
 package io.gravitee.resource.ai_model;
 
+import io.gravitee.inference.service.InferenceService;
 import io.gravitee.resource.ai_model.configuration.ModelConfiguration;
 import io.gravitee.resource.ai_model.configuration.ModelEnum;
 import io.gravitee.resource.ai_model.configuration.TextClassificationAiModelConfiguration;
@@ -36,5 +37,10 @@ public class TestConfiguration {
     @Bean
     public TextClassificationAiModelConfiguration configuration() {
         return new TextClassificationAiModelConfiguration(new ModelConfiguration(ModelEnum.MINILMV2_TOXIC_JIGSAW_MODEL));
+    }
+
+    @Bean
+    public InferenceService inferenceService(Vertx vertx) {
+        return new InferenceService(vertx);
     }
 }

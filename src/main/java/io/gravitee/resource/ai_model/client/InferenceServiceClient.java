@@ -30,7 +30,6 @@ import io.gravitee.inference.api.service.InferenceAction;
 import io.gravitee.inference.api.service.InferenceFormat;
 import io.gravitee.inference.api.service.InferenceRequest;
 import io.gravitee.inference.api.service.InferenceType;
-import io.gravitee.inference.service.InferenceService;
 import io.gravitee.resource.ai_model.model.ModelFileType;
 import io.reactivex.rxjava3.core.Single;
 import io.vertx.core.buffer.Buffer;
@@ -44,17 +43,11 @@ import lombok.extern.slf4j.Slf4j;
 public class InferenceServiceClient {
 
     private final Vertx vertx;
-    private final InferenceService inferenceService;
 
     private String modelAddress;
 
-    public InferenceServiceClient(Vertx vertx, InferenceService inferenceService) {
+    public InferenceServiceClient(Vertx vertx) {
         this.vertx = vertx;
-        this.inferenceService = inferenceService;
-    }
-
-    public void initialize() throws Exception {
-        inferenceService.start();
     }
 
     public Single<ClassifierResults> inferModel(String prompt, Map<ModelFileType, String> modelFiles) {

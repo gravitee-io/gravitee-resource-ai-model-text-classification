@@ -17,18 +17,15 @@ package io.gravitee.resource.ai_model.client;
 
 import static io.gravitee.inference.api.Constants.SERVICE_INFERENCE_MODELS_ADDRESS;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import io.gravitee.inference.api.classifier.ClassifierResult;
 import io.gravitee.inference.api.classifier.ClassifierResults;
-import io.gravitee.inference.service.InferenceService;
 import io.gravitee.resource.ai_model.model.ModelFileType;
 import io.reactivex.rxjava3.core.Single;
 import io.vertx.core.buffer.Buffer;
@@ -59,15 +56,12 @@ class InferenceServiceClientTest {
     @Mock
     Message<Buffer> inferResponse;
 
-    @Mock
-    InferenceService inferenceService;
-
     @InjectMocks
     InferenceServiceClient client;
 
     @BeforeEach
     void setup() {
-        client = new InferenceServiceClient(vertx, inferenceService);
+        client = new InferenceServiceClient(vertx);
     }
 
     @Test
@@ -171,18 +165,5 @@ class InferenceServiceClientTest {
             .inferModel(prompt, modelFiles)
             .test()
             .assertError(e -> e instanceof RuntimeException && e.getMessage().equals("Model loading failed"));
-    }
-
-    @Test
-    void shouldInitializeService() throws Exception {
-        client.initialize();
-        verify(inferenceService).start();
-    }
-
-    @Test
-    void shouldFailWhenStartThrowsException() throws Exception {
-        doThrow(new RuntimeException("Inference service failed loading")).when(inferenceService).start();
-
-        assertThatThrownBy(() -> client.initialize()).isInstanceOf(RuntimeException.class).hasMessage("Inference service failed loading");
     }
 }

@@ -40,8 +40,8 @@
         <gravitee-node.version>7.8.0</gravitee-node.version>
         <gravitee-resource-api.version>1.1.0</gravitee-resource-api.version>
         <gravitee-resource-ai-model-api.version>1.0.0</gravitee-resource-ai-model-api.version>
-        <gravitee-inference-service.version>1.1.0</gravitee-inference-service.version>
-
+        <gravitee-inference.version>1.1.2</gravitee-inference.version>
+        <gravitee-inference-service.version>1.1.2</gravitee-inference-service.version>
         <wiremock.version>3.13.0</wiremock.version>
 
         <maven-plugin-properties.version>1.2.1</maven-plugin-properties.version>
@@ -94,17 +94,17 @@
             <artifactId>gravitee-resource-ai-model-api</artifactId>
             <version>${gravitee-resource-ai-model-api.version}</version>
         </dependency>
+        <dependency>
+            <groupId>io.gravitee.inference.api</groupId>
+            <artifactId>gravitee-inference-api</artifactId>
+            <version>${gravitee-inference.version}</version>
+        </dependency>
 
         <!-- Spring -->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
             <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>io.gravitee.inference.service</groupId>
-            <artifactId>gravitee-inference-service</artifactId>
-            <version>${gravitee-inference-service.version}</version>
         </dependency>
 
         <!-- Vert.x dependencies -->
@@ -116,6 +116,21 @@
         <dependency>
             <groupId>io.vertx</groupId>
             <artifactId>vertx-web-client</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+
+        <!-- SLF4J dependencies -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- Jackson dependencies -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
             <scope>provided</scope>
         </dependency>
 
@@ -161,6 +176,12 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.gravitee.inference.service</groupId>
+            <artifactId>gravitee-inference-service</artifactId>
+            <version>${gravitee-inference-service.version}</version>
             <scope>test</scope>
         </dependency>
 
