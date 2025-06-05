@@ -1,3 +1,10 @@
+# [1.0.0-alpha.3](https://github.com/gravitee-io/gravitee-resource-ai-model-text-classification/compare/1.0.0-alpha.2...1.0.0-alpha.3) (2025-06-05)
+
+
+### Bug Fixes
+
+* remove inference service initialization at resource start up ([1e35c8d](https://github.com/gravitee-io/gravitee-resource-ai-model-text-classification/commit/1e35c8d3bed1033a5194cf8fb381dc2639abf4ad))
+
 # [1.0.0-alpha.2](https://github.com/gravitee-io/gravitee-resource-ai-model-text-classification/compare/1.0.0-alpha.1...1.0.0-alpha.2) (2025-06-03)
 
 
