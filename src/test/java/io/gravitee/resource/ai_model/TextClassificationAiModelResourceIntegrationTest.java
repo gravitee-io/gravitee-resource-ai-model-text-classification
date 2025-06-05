@@ -17,6 +17,7 @@ package io.gravitee.resource.ai_model;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import io.gravitee.inference.service.InferenceService;
 import io.gravitee.resource.ai_model.api.ClassifierResults;
 import io.gravitee.resource.ai_model.api.model.PromptInput;
 import java.util.Comparator;
@@ -38,14 +39,19 @@ class TextClassificationAiModelResourceIntegrationTest {
     @Autowired
     TextClassificationAiModelResource resource;
 
+    @Autowired
+    InferenceService inferenceService;
+
     @BeforeEach
     void setUp() throws Exception {
         resource.doStart();
+        inferenceService.start();
     }
 
     @AfterEach
     void tearDown() throws Exception {
         resource.doStop();
+        inferenceService.stop();
     }
 
     @Test
