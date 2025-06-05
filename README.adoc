@@ -20,3 +20,12 @@ The resource is used to fetch and invoke a text classification model for Gravite
 | 1.x
 | 4.8.x
 |===
+
+== Notice
+
+This plugin exposes models based on meta LLama 4:
+
+* link:https://huggingface.co/gravitee-io/Llama-Prompt-Guard-2-22M-onnx[gravitee-io/Llama-Prompt-Guard-2-22M-onnx]
+* link:https://huggingface.co/gravitee-io/Llama-Prompt-Guard-2-86M-onnx[gravitee-io/Llama-Prompt-Guard-2-86M-onnx]
+
+``Llama 4 is licensed under the Llama 4 Community License, Copyright © Meta Platforms, Inc. All Rights Reserved.``
