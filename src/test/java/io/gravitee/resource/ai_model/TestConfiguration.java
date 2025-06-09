@@ -15,7 +15,10 @@
  */
 package io.gravitee.resource.ai_model;
 
+import io.gravitee.huggingface.reactive.webclient.downloader.HuggingFaceDownloader;
 import io.gravitee.inference.service.InferenceService;
+import io.gravitee.resource.ai_model.api.model.ModelFile;
+import io.gravitee.resource.ai_model.api.model.ModelFileType;
 import io.gravitee.resource.ai_model.configuration.ModelConfiguration;
 import io.gravitee.resource.ai_model.configuration.ModelEnum;
 import io.gravitee.resource.ai_model.configuration.TextClassificationAiModelConfiguration;
@@ -24,19 +27,21 @@ import org.springframework.context.annotation.Bean;
 
 public class TestConfiguration {
 
+    public static final ModelEnum MODEL = ModelEnum.MINILMV2_TOXIC_JIGSAW_MODEL;
+
     @Bean
     public Vertx vertx() {
         return Vertx.vertx();
     }
 
     @Bean
-    public TextClassificationAiModelResource resource() {
-        return new TextClassificationAiModelResource();
+    public TextClassificationAiModelConfiguration configuration() {
+        return new TextClassificationAiModelConfiguration(new ModelConfiguration(MODEL));
     }
 
     @Bean
-    public TextClassificationAiModelConfiguration configuration() {
-        return new TextClassificationAiModelConfiguration(new ModelConfiguration(ModelEnum.MINILMV2_TOXIC_JIGSAW_MODEL));
+    public TextClassificationAiModelResource resource() {
+        return new TextClassificationAiModelResource();
     }
 
     @Bean

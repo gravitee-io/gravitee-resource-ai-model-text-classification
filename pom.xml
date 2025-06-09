@@ -39,9 +39,10 @@
         <gravitee-common.version>4.7.0</gravitee-common.version>
         <gravitee-node.version>7.8.0</gravitee-node.version>
         <gravitee-resource-api.version>1.1.0</gravitee-resource-api.version>
-        <gravitee-resource-ai-model-api.version>1.0.0</gravitee-resource-ai-model-api.version>
+        <gravitee-resource-ai-model-api.version>2.0.1</gravitee-resource-ai-model-api.version>
         <gravitee-inference.version>1.1.2</gravitee-inference.version>
         <gravitee-inference-service.version>1.1.2</gravitee-inference-service.version>
+        <gravitee-huggingface-reactive-webclient.version>1.0.0</gravitee-huggingface-reactive-webclient.version>
         <wiremock.version>3.13.0</wiremock.version>
 
         <maven-plugin-properties.version>1.2.1</maven-plugin-properties.version>
@@ -99,6 +100,11 @@
             <artifactId>gravitee-inference-api</artifactId>
             <version>${gravitee-inference.version}</version>
         </dependency>
+        <dependency>
+            <groupId>io.gravitee.huggingface</groupId>
+            <artifactId>gravitee-huggingface-reactive-webclient</artifactId>
+            <version>${gravitee-huggingface-reactive-webclient.version}</version>
+        </dependency>
 
         <!-- Spring -->
         <dependency>
@@ -118,7 +124,6 @@
             <artifactId>vertx-web-client</artifactId>
             <scope>provided</scope>
         </dependency>
-
 
         <!-- SLF4J dependencies -->
         <dependency>
