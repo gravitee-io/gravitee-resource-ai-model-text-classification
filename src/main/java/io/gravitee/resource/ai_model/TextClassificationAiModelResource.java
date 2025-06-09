@@ -15,56 +15,46 @@
  */
 package io.gravitee.resource.ai_model;
 
-import io.gravitee.resource.ai_model.api.AiTextClassificationModelResource;
-import io.gravitee.resource.ai_model.api.ClassifierResults;
+import static io.gravitee.inference.api.Constants.*;
+import static io.gravitee.inference.api.Constants.CONFIG_JSON_PATH;
+
+import io.gravitee.huggingface.reactive.webclient.downloader.HuggingFaceDownloader;
+import io.gravitee.huggingface.reactive.webclient.downloader.HuggingFaceDownloader.FetchModelConfig;
+import io.gravitee.inference.api.classifier.ClassifierMode;
+import io.gravitee.inference.api.service.InferenceFormat;
+import io.gravitee.inference.api.service.InferenceType;
+import io.gravitee.resource.ai_model.api.AiTextModelResource;
+import io.gravitee.resource.ai_model.api.ModelFetcher;
+import io.gravitee.resource.ai_model.api.model.ModelFile;
+import io.gravitee.resource.ai_model.api.model.ModelFileType;
 import io.gravitee.resource.ai_model.api.model.PromptInput;
-import io.gravitee.resource.ai_model.client.InferenceServiceClient;
+import io.gravitee.resource.ai_model.api.result.ClassifierResults;
+import io.gravitee.resource.ai_model.client.TextClassificationInferenceClient;
 import io.gravitee.resource.ai_model.configuration.TextClassificationAiModelConfiguration;
-import io.gravitee.resource.ai_model.downloader.HuggingFaceDownloaderService;
-import io.gravitee.resource.ai_model.downloader.HuggingFaceWebClientFactory;
-import io.gravitee.resource.ai_model.fetcher.VertxHuggingFaceClientRx;
-import io.gravitee.resource.ai_model.model.ModelFile;
-import io.gravitee.resource.ai_model.model.ModelFileType;
 import io.reactivex.rxjava3.core.Single;
-import io.vertx.rxjava3.core.Vertx;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
-import lombok.NonNull;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.BeansException;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
+import java.util.Map;
 
-@Slf4j
 public class TextClassificationAiModelResource
-    extends AiTextClassificationModelResource<TextClassificationAiModelConfiguration>
-    implements ApplicationContextAware {
+    extends AiTextModelResource<TextClassificationAiModelConfiguration, io.gravitee.inference.api.classifier.ClassifierResults, ClassifierResults> {
 
     private String modelId;
     private List<ModelFile> modelFiles;
     private Path modelDirectory;
 
-    private ApplicationContext applicationContext;
-    private HuggingFaceDownloaderService huggingFaceDownloaderService;
-    private Vertx vertx;
-    private InferenceServiceClient inferenceServiceClient;
-
     @Override
     protected void doStart() throws Exception {
-        super.doStart();
-
-        var modelName = configuration().model().modelName();
-        this.modelId = modelName;
+        this.modelId = configuration().model().modelName();
         this.modelFiles = getModelFiles();
-        this.modelDirectory = Files.createTempDirectory(modelName.replace("/", "-"));
+        this.modelDirectory = getFileDirectory();
 
-        this.vertx = applicationContext.getBean(Vertx.class);
-        this.inferenceServiceClient = new InferenceServiceClient(vertx);
+        super.doStart();
+    }
 
-        var huggingFaceWebClient = HuggingFaceWebClientFactory.createDefaultClient(vertx);
-        var vertxHuggingFaceClientRx = new VertxHuggingFaceClientRx(huggingFaceWebClient);
-        this.huggingFaceDownloaderService = new HuggingFaceDownloaderService(vertx, vertxHuggingFaceClientRx);
+    @Override
+    protected void doStop() throws Exception {
+        super.doStop();
     }
 
     private List<ModelFile> getModelFiles() {
@@ -77,31 +67,42 @@ public class TextClassificationAiModelResource
     }
 
     @Override
-    protected void doStop() throws Exception {
-        super.doStop();
-        vertx
-            .fileSystem()
-            .rxDeleteRecursive(modelDirectory.toString(), true)
-            .doOnComplete(() -> log.debug("Model directory deleted: {}", modelDirectory))
-            .doOnError(err -> log.error("Failed to delete model directory: {}", err.getMessage(), err))
-            .blockingAwait();
-    }
-
-    @Override
     public Single<ClassifierResults> invokeModel(PromptInput promptInput) {
-        return huggingFaceDownloaderService
-            .downloadModel(modelId, modelFiles, modelDirectory)
-            .flatMap(downloadedFiles -> {
-                log.debug("Downloaded files to invoke the model: {}", downloadedFiles);
-                return inferenceServiceClient
-                    .inferModel(promptInput.promptContent(), downloadedFiles)
-                    .map(TextClassificationAiModelResource::mapToClassifierResults);
-            });
+        return inferenceServiceClient.infer(promptInput).map(TextClassificationAiModelResource::mapToClassifierResults);
     }
 
     @Override
-    public void setApplicationContext(@NonNull ApplicationContext applicationContext) throws BeansException {
-        this.applicationContext = applicationContext;
+    protected ModelFetcher buildModelFetcher() {
+        var config = new FetchModelConfig(modelId, modelFiles, modelDirectory);
+        return new HuggingFaceDownloader(vertx, config);
+    }
+
+    @Override
+    protected TextClassificationInferenceClient buildInferenceServiceClient() {
+        return new TextClassificationInferenceClient(vertx);
+    }
+
+    @Override
+    protected Map<String, Object> getModelConfiguration(Map<ModelFileType, String> modelFileMap) {
+        return Map.of(
+            INFERENCE_FORMAT,
+            InferenceFormat.ONNX_BERT,
+            INFERENCE_TYPE,
+            InferenceType.CLASSIFIER,
+            CLASSIFIER_MODE,
+            ClassifierMode.SEQUENCE,
+            MODEL_PATH,
+            modelFileMap.get(ModelFileType.MODEL),
+            TOKENIZER_PATH,
+            modelFileMap.get(ModelFileType.TOKENIZER),
+            CONFIG_JSON_PATH,
+            modelFileMap.get(ModelFileType.CONFIG)
+        );
+    }
+
+    @Override
+    protected String getModelId() {
+        return this.modelId;
     }
 
     private static ClassifierResults mapToClassifierResults(io.gravitee.inference.api.classifier.ClassifierResults classifierResults) {

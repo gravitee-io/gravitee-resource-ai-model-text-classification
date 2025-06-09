@@ -26,7 +26,9 @@ import static org.mockito.Mockito.when;
 
 import io.gravitee.inference.api.classifier.ClassifierResult;
 import io.gravitee.inference.api.classifier.ClassifierResults;
-import io.gravitee.resource.ai_model.model.ModelFileType;
+import io.gravitee.resource.ai_model.api.ModelInvokeException;
+import io.gravitee.resource.ai_model.api.model.ModelFileType;
+import io.gravitee.resource.ai_model.api.model.PromptInput;
 import io.reactivex.rxjava3.core.Single;
 import io.vertx.core.buffer.Buffer;
 import io.vertx.rxjava3.core.Vertx;
@@ -34,6 +36,7 @@ import io.vertx.rxjava3.core.eventbus.EventBus;
 import io.vertx.rxjava3.core.eventbus.Message;
 import java.lang.reflect.Field;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -57,60 +60,15 @@ class InferenceServiceClientTest {
     Message<Buffer> inferResponse;
 
     @InjectMocks
-    InferenceServiceClient client;
+    TextClassificationInferenceClient client;
 
     @BeforeEach
     void setup() {
-        client = new InferenceServiceClient(vertx);
+        client = new TextClassificationInferenceClient(vertx);
     }
 
     @Test
-    void shouldLoadModelIfAddressIsNullAndThenInfer() {
-        // given
-        String modelAddress = "model::123";
-        String classifierJson =
-            """
-            {
-              "results": [
-                {
-                  "label": "toxic",
-                  "score": 0.95
-                },
-                {
-                  "label": "obscene",
-                  "score": 0.05
-                }
-              ]
-            }
-            """;
-        String prompt = "Very inappropriate prompt";
-        Map<ModelFileType, String> modelFiles = Map.of(
-            ModelFileType.MODEL,
-            "model.onnx",
-            ModelFileType.TOKENIZER,
-            "tokenizer.json",
-            ModelFileType.CONFIG,
-            "config.json"
-        );
-
-        //when
-        when(vertx.eventBus()).thenReturn(eventBus);
-
-        when(eventBus.<Buffer>request(eq(SERVICE_INFERENCE_MODELS_ADDRESS), any())).thenReturn(Single.just(startModelResponse));
-        when(startModelResponse.body()).thenReturn(Buffer.buffer(modelAddress));
-
-        when(eventBus.<Buffer>request(eq(modelAddress), any())).thenReturn(Single.just(inferResponse));
-        when(inferResponse.body()).thenReturn(Buffer.buffer(classifierJson));
-
-        //then
-        ClassifierResults result = client.inferModel(prompt, modelFiles).blockingGet();
-
-        assertThat(result).isNotNull();
-        assertThat(result.results()).containsExactly(new ClassifierResult("toxic", 0.95f), new ClassifierResult("obscene", 0.05f));
-    }
-
-    @Test
-    void shouldUseCachedModelAddressAndSkipModelLoading() throws NoSuchFieldException, IllegalAccessException {
+    void shouldCallModelAddress() throws NoSuchFieldException, IllegalAccessException {
         // given
         String existingModelAddress = "cached::model::addr";
         String prompt = "Skip loading?";
@@ -123,7 +81,7 @@ class InferenceServiceClientTest {
         }
         """;
 
-        Field field = InferenceServiceClient.class.getDeclaredField("modelAddress");
+        Field field = client.getClass().getSuperclass().getDeclaredField("modelAddress");
         field.setAccessible(true);
         field.set(client, existingModelAddress);
 
@@ -133,37 +91,57 @@ class InferenceServiceClientTest {
         when(inferResponse.body()).thenReturn(Buffer.buffer(classifierJson));
 
         // when
-        ClassifierResults result = client.inferModel(prompt, Map.of()).blockingGet();
+        ClassifierResults result = client
+            .infer(new PromptInput(prompt))
+            .test()
+            .awaitDone(5, TimeUnit.SECONDS)
+            .assertComplete()
+            .assertNoErrors()
+            .values()
+            .getFirst();
 
         // then
         assertNotNull(result);
         assertThat(result.results()).containsExactly(new ClassifierResult("neutral", 1.0f));
+    }
+
+    @Test
+    void shouldThrowModelInvokeExceptionDueToMissingAddress() {
+        // given
+        String prompt = "Skip loading?";
+
+        // when
+        client.infer(new PromptInput(prompt)).test().awaitDone(5, TimeUnit.SECONDS).assertError(ModelInvokeException.class);
+
+        // then
         verify(eventBus, never()).request(eq(SERVICE_INFERENCE_MODELS_ADDRESS), any());
     }
 
     @Test
-    void shouldPropagateErrorIfEventBusFails() {
-        //given
-        String prompt = "fail";
-        Map<ModelFileType, String> modelFiles = Map.of(
-            ModelFileType.MODEL,
-            "model.onnx",
-            ModelFileType.TOKENIZER,
-            "tokenizer.json",
-            ModelFileType.CONFIG,
-            "config.json"
-        );
+    void shouldThrowErrorDueToBusError() throws NoSuchFieldException, IllegalAccessException {
+        // given
+        String existingModelAddress = "cached::model::addr";
+        String prompt = "Skip loading?";
+        String classifierJson =
+            """
+            {
+              "results": [
+                { "label": "neutral", "score": 1.0 }
+              ]
+            }
+            """;
+
+        Field field = client.getClass().getSuperclass().getDeclaredField("modelAddress");
+        field.setAccessible(true);
+        field.set(client, existingModelAddress);
 
         //when
         when(vertx.eventBus()).thenReturn(eventBus);
 
-        when(eventBus.<Buffer>request(eq(SERVICE_INFERENCE_MODELS_ADDRESS), any(Buffer.class)))
-            .thenReturn(Single.error(new RuntimeException("Model loading failed")));
+        when(eventBus.<Buffer>request(eq(existingModelAddress), any(Buffer.class)))
+            .thenReturn(Single.error(new RuntimeException("An error has occurred")));
 
         //then
-        client
-            .inferModel(prompt, modelFiles)
-            .test()
-            .assertError(e -> e instanceof RuntimeException && e.getMessage().equals("Model loading failed"));
+        client.infer(new PromptInput(prompt)).test().awaitDone(5, TimeUnit.SECONDS).assertError(RuntimeException.class);
     }
 }

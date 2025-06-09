@@ -20,6 +20,7 @@ hs_err_pid*
 # -- Cicd : Git ignore the [.circleci/**/*] which contains
 # files which do not need to be commited (password to artifactory)
 .circleci/**/*
+null/
 # -- Cicd : Do not git ignore the [!./.circleci/config.yml] which contains
 # the pipeline definition
 !.circleci/config.yml
@@ -35,3 +36,6 @@ graviteebot.gpg.pub.key
 # -- Cicd : The [.secrets.json] file contains secrets 
 # which should not be commited
 .secrets.json
+
+null/
+.java-version
