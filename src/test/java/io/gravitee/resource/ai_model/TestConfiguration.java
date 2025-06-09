@@ -20,13 +20,22 @@ import io.gravitee.resource.ai_model.configuration.ModelConfiguration;
 import io.gravitee.resource.ai_model.configuration.ModelEnum;
 import io.gravitee.resource.ai_model.configuration.TextClassificationAiModelConfiguration;
 import io.vertx.rxjava3.core.Vertx;
+import java.nio.file.Files;
+import lombok.SneakyThrows;
 import org.springframework.context.annotation.Bean;
 
 public class TestConfiguration {
 
+    public static final ModelEnum MODEL = ModelEnum.MINILMV2_TOXIC_JIGSAW_MODEL;
+
     @Bean
     public Vertx vertx() {
         return Vertx.vertx();
+    }
+
+    @Bean
+    public TextClassificationAiModelConfiguration configuration() {
+        return new TextClassificationAiModelConfiguration(new ModelConfiguration(MODEL));
     }
 
     @Bean
@@ -35,12 +44,8 @@ public class TestConfiguration {
     }
 
     @Bean
-    public TextClassificationAiModelConfiguration configuration() {
-        return new TextClassificationAiModelConfiguration(new ModelConfiguration(ModelEnum.MINILMV2_TOXIC_JIGSAW_MODEL));
-    }
-
-    @Bean
+    @SneakyThrows
     public InferenceService inferenceService(Vertx vertx) {
-        return new InferenceService(vertx);
+        return new InferenceService(vertx, Files.createTempDirectory("models").toString());
     }
 }

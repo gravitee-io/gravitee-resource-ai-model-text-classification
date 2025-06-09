@@ -18,8 +18,10 @@ package io.gravitee.resource.ai_model;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import io.gravitee.inference.service.InferenceService;
-import io.gravitee.resource.ai_model.api.ClassifierResults;
 import io.gravitee.resource.ai_model.api.model.PromptInput;
+import io.gravitee.resource.ai_model.api.result.ClassifierResults.ClassifierResult;
+import io.reactivex.rxjava3.core.Observable;
+import io.vertx.rxjava3.core.Vertx;
 import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -27,14 +29,16 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-@ExtendWith({ SpringExtension.class, MockitoExtension.class })
+@ExtendWith({ SpringExtension.class })
 @ContextConfiguration(classes = { TestConfiguration.class })
 class TextClassificationAiModelResourceIntegrationTest {
+
+    @Autowired
+    Vertx vertx;
 
     @Autowired
     TextClassificationAiModelResource resource;
@@ -44,25 +48,25 @@ class TextClassificationAiModelResourceIntegrationTest {
 
     @BeforeEach
     void setUp() throws Exception {
-        resource.doStart();
         inferenceService.start();
+        resource.doStart();
     }
 
     @AfterEach
     void tearDown() throws Exception {
-        resource.doStop();
         inferenceService.stop();
+        resource.doStop();
     }
 
     @Test
-    void shouldReturnExpectedClassificationForToxicSentence() {
-        List<ClassifierResults.ClassifierResult> expected = List.of(
-            new ClassifierResults.ClassifierResult("toxic", 0.64473337f, null, null, null),
-            new ClassifierResults.ClassifierResult("obscene", 0.30525568f, null, null, null),
-            new ClassifierResults.ClassifierResult("insult", 0.08316804f, null, null, null),
-            new ClassifierResults.ClassifierResult("severe_toxic", 0.0032595915f, null, null, null),
-            new ClassifierResults.ClassifierResult("identity_hate", 0.0026842426f, null, null, null),
-            new ClassifierResults.ClassifierResult("threat", 0.0012624051f, null, null, null)
+    void should_return_expected_classification_for_toxic_sentence() {
+        List<ClassifierResult> expected = List.of(
+            new ClassifierResult("toxic", 0.64473337f, null, null, null),
+            new ClassifierResult("obscene", 0.30525568f, null, null, null),
+            new ClassifierResult("insult", 0.08316804f, null, null, null),
+            new ClassifierResult("severe_toxic", 0.0032595915f, null, null, null),
+            new ClassifierResult("identity_hate", 0.0026842426f, null, null, null),
+            new ClassifierResult("threat", 0.0012624051f, null, null, null)
         );
 
         Comparator<Float> floatComparatorWithTolerance = (f1, f2) -> {
@@ -70,10 +74,11 @@ class TextClassificationAiModelResourceIntegrationTest {
             return Math.abs(f1 - f2) < 0.0001f ? 0 : Float.compare(f1, f2);
         };
 
-        resource
-            .invokeModel(new PromptInput("Nobody asked for your bullsh*t response."))
+        Observable
+            .timer(15, TimeUnit.SECONDS)
+            .flatMapSingle(i -> resource.invokeModel(new PromptInput("Nobody asked for your bullsh*t response.")))
             .test()
-            .awaitDone(10, TimeUnit.SECONDS)
+            .awaitDone(20, TimeUnit.SECONDS)
             .assertComplete()
             .assertNoErrors()
             .assertValue(actualResults -> {
