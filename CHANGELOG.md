@@ -1,3 +1,15 @@
+# [1.0.0-alpha.4](https://github.com/gravitee-io/gravitee-resource-ai-model-text-classification/compare/1.0.0-alpha.3...1.0.0-alpha.4) (2025-06-10)
+
+
+### Code Refactoring
+
+* use ai model resource api refactored ([d14be95](https://github.com/gravitee-io/gravitee-resource-ai-model-text-classification/commit/d14be95e5b7372e69ab4ace374cac4d7c29c7f1c))
+
+
+### BREAKING CHANGES
+
+* model is loaded on doStart using new ai model resource api interfaces
+
 # [1.0.0-alpha.3](https://github.com/gravitee-io/gravitee-resource-ai-model-text-classification/compare/1.0.0-alpha.2...1.0.0-alpha.3) (2025-06-05)
 
 
