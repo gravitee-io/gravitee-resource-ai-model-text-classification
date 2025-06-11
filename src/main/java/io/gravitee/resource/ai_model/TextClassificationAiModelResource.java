@@ -35,7 +35,9 @@ import io.reactivex.rxjava3.core.Single;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.Map;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class TextClassificationAiModelResource
     extends AiTextModelResource<TextClassificationAiModelConfiguration, io.gravitee.inference.api.classifier.ClassifierResults, ClassifierResults> {
 
@@ -55,6 +57,12 @@ public class TextClassificationAiModelResource
     @Override
     protected void doStop() throws Exception {
         super.doStop();
+        inferenceServiceClient
+            .stopModel()
+            .subscribe(
+                address -> log.debug("Model [{}] at address [{}] stopped", modelId, address),
+                throwable -> log.error("Model {} stopped", modelId, throwable)
+            );
     }
 
     private List<ModelFile> getModelFiles() {
