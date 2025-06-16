@@ -40,8 +40,8 @@
         <gravitee-node.version>7.8.0</gravitee-node.version>
         <gravitee-resource-api.version>1.1.0</gravitee-resource-api.version>
         <gravitee-resource-ai-model-api.version>2.0.1</gravitee-resource-ai-model-api.version>
-        <gravitee-inference.version>1.1.2</gravitee-inference.version>
-        <gravitee-inference-service.version>1.1.2</gravitee-inference-service.version>
+        <gravitee-inference-api.version>1.1.2</gravitee-inference-api.version>
+        <gravitee-inference-service.version>1.1.3</gravitee-inference-service.version>
         <gravitee-huggingface-reactive-webclient.version>1.0.0</gravitee-huggingface-reactive-webclient.version>
         <wiremock.version>3.13.0</wiremock.version>
 
@@ -98,7 +98,7 @@
         <dependency>
             <groupId>io.gravitee.inference.api</groupId>
             <artifactId>gravitee-inference-api</artifactId>
-            <version>${gravitee-inference.version}</version>
+            <version>${gravitee-inference-api.version}</version>
         </dependency>
         <dependency>
             <groupId>io.gravitee.huggingface</groupId>

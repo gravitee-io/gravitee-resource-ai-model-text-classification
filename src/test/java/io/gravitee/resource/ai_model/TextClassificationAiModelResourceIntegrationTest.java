@@ -78,7 +78,6 @@ class TextClassificationAiModelResourceIntegrationTest {
         Observable
             .timer(15, TimeUnit.SECONDS)
             .flatMapSingle(i -> resource.invokeModel(new PromptInput("Nobody asked for your bullsh*t response.")))
-            .subscribeOn(RxHelper.blockingScheduler(vertx.getDelegate()))
             .test()
             .awaitDone(20, TimeUnit.SECONDS)
             .assertComplete()

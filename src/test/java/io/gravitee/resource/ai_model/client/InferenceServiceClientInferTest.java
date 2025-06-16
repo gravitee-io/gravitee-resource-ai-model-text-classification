@@ -20,15 +20,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 import io.gravitee.inference.api.classifier.ClassifierResult;
 import io.gravitee.inference.api.classifier.ClassifierResults;
 import io.gravitee.resource.ai_model.api.ModelInvokeException;
-import io.gravitee.resource.ai_model.api.model.ModelFileType;
 import io.gravitee.resource.ai_model.api.model.PromptInput;
+import io.reactivex.rxjava3.core.Completable;
+import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.core.Single;
 import io.vertx.core.buffer.Buffer;
 import io.vertx.rxjava3.core.Vertx;
@@ -45,16 +44,13 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
-class InferenceServiceClientTest {
+class InferenceServiceClientInferTest {
 
     @Mock
     Vertx vertx;
 
     @Mock
     EventBus eventBus;
-
-    @Mock
-    Message<Buffer> startModelResponse;
 
     @Mock
     Message<Buffer> inferResponse;
@@ -122,14 +118,6 @@ class InferenceServiceClientTest {
         // given
         String existingModelAddress = "cached::model::addr";
         String prompt = "Skip loading?";
-        String classifierJson =
-            """
-            {
-              "results": [
-                { "label": "neutral", "score": 1.0 }
-              ]
-            }
-            """;
 
         Field field = client.getClass().getSuperclass().getDeclaredField("modelAddress");
         field.setAccessible(true);

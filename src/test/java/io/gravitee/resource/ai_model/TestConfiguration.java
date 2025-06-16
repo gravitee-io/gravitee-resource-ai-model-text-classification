@@ -15,10 +15,7 @@
  */
 package io.gravitee.resource.ai_model;
 
-import io.gravitee.huggingface.reactive.webclient.downloader.HuggingFaceDownloader;
 import io.gravitee.inference.service.InferenceService;
-import io.gravitee.resource.ai_model.api.model.ModelFile;
-import io.gravitee.resource.ai_model.api.model.ModelFileType;
 import io.gravitee.resource.ai_model.configuration.ModelConfiguration;
 import io.gravitee.resource.ai_model.configuration.ModelEnum;
 import io.gravitee.resource.ai_model.configuration.TextClassificationAiModelConfiguration;
