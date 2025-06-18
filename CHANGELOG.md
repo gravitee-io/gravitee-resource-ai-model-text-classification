@@ -1,3 +1,10 @@
+# [1.0.0-alpha.3](https://github.com/gravitee-io/gravitee-resource-ai-model-text-classification/compare/1.0.0-alpha.2...1.0.0-alpha.3) (2025-06-18)
+
+
+### Bug Fixes
+
+* stop model when resource stops ([3e3b540](https://github.com/gravitee-io/gravitee-resource-ai-model-text-classification/commit/3e3b54088f32ff32e946ec86bafce5a7231af13b))
+
 # [1.0.0-alpha.2](https://github.com/gravitee-io/gravitee-resource-ai-model-text-classification/compare/1.0.0-alpha.1...1.0.0-alpha.2) (2025-06-18)
 
 
