@@ -52,19 +52,17 @@ public class TextClassificationAiModelResource
 
     private ApplicationContext applicationContext;
     private HuggingFaceDownloaderService huggingFaceDownloaderService;
-    private Vertx vertx;
     private InferenceServiceClient inferenceServiceClient;
 
     @Override
     protected void doStart() throws Exception {
         super.doStart();
 
-        var modelName = configuration().model().modelName();
-        this.modelId = modelName;
+        this.modelId = configuration().model().modelName();
         this.modelFiles = getModelFiles();
         this.modelDirectory = getFileDirectory();
 
-        this.vertx = applicationContext.getBean(Vertx.class);
+        Vertx vertx = applicationContext.getBean(Vertx.class);
         this.inferenceServiceClient = new InferenceServiceClient(vertx);
 
         var huggingFaceWebClient = HuggingFaceWebClientFactory.createDefaultClient(vertx);
@@ -97,12 +95,7 @@ public class TextClassificationAiModelResource
     @Override
     protected void doStop() throws Exception {
         super.doStop();
-        vertx
-            .fileSystem()
-            .rxDeleteRecursive(modelDirectory.toString(), true)
-            .doOnComplete(() -> log.debug("Model directory deleted: {}", modelDirectory))
-            .doOnError(err -> log.error("Failed to delete model directory: {}", err.getMessage(), err))
-            .blockingAwait();
+        inferenceServiceClient.stopModel().blockingAwait();
     }
 
     @Override

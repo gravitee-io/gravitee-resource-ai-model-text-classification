@@ -31,6 +31,7 @@ import io.gravitee.inference.api.service.InferenceFormat;
 import io.gravitee.inference.api.service.InferenceRequest;
 import io.gravitee.inference.api.service.InferenceType;
 import io.gravitee.resource.ai_model.model.ModelFileType;
+import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Single;
 import io.vertx.core.buffer.Buffer;
 import io.vertx.core.json.Json;
@@ -59,6 +60,18 @@ public class InferenceServiceClient {
                     .map(message -> Json.decodeValue(message.body(), ClassifierResults.class))
             )
             .doOnError(throwable -> log.error(throwable.getMessage(), throwable));
+    }
+
+    public Completable stopModel() {
+        if (modelAddress != null) {
+            return this.vertx.eventBus()
+                .request(Constants.SERVICE_INFERENCE_MODELS_ADDRESS, Json.encodeToBuffer(this.buildStopRequest()))
+                .map(bufferMessage -> bufferMessage.body().toString())
+                .doOnSuccess(address -> this.modelAddress = null)
+                .doOnError(throwable -> log.error(throwable.getMessage(), throwable))
+                .ignoreElement();
+        }
+        return Completable.complete();
     }
 
     private Single<String> getModelAddress(Map<ModelFileType, String> modelFiles) {
@@ -96,6 +109,10 @@ public class InferenceServiceClient {
                 modelFiles.get(ModelFileType.CONFIG)
             )
         );
+    }
+
+    protected InferenceRequest buildStopRequest() {
+        return new InferenceRequest(InferenceAction.STOP, Map.of("modelAddress", this.modelAddress));
     }
 
     private static InferenceRequest infer(String sentence) {
