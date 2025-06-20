@@ -221,37 +221,6 @@
                 </executions>
             </plugin>
             <plugin>
-                <groupId>com.mycila</groupId>
-                <artifactId>license-maven-plugin</artifactId>
-                <configuration>
-                    <properties>
-                        <owner>The Gravitee team</owner>
-                        <email>http://gravitee.io</email>
-                    </properties>
-                    <licenseSets>
-                        <licenseSet>
-                            <header>com/mycila/maven/plugin/license/templates/APACHE-2.txt</header>
-                            <excludes>
-                                <exclude>NOTICE.txt</exclude>
-                                <exclude>LICENSE.txt</exclude>
-                                <exclude>**/README</exclude>
-                                <exclude>src/main/packaging/**</exclude>
-                                <exclude>src/test/resources/**</exclude>
-                                <exclude>src/main/resources/**</exclude>
-                                <exclude>src/main/webapp/**</exclude>
-                                <exclude>node_modules/**</exclude>
-                                <exclude>dist/**</exclude>
-                                <exclude>.tmp/**</exclude>
-                                <exclude>.*</exclude>
-                                <exclude>.*/**</exclude>
-                                <exclude>**/*.adoc</exclude>
-                            </excludes>
-                        </licenseSet>
-                    </licenseSets>
-                    <skip>${skip.validation}</skip>
-                </configuration>
-            </plugin>
-            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-assembly-plugin</artifactId>
                 <version>${maven-plugin-assembly.version}</version>
