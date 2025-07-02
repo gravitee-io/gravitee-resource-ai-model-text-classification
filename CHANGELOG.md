@@ -1,3 +1,16 @@
+# [2.0.0](https://github.com/gravitee-io/gravitee-resource-ai-model-text-classification/compare/1.0.0...2.0.0) (2025-07-02)
+
+
+### chore
+
+* **deps:** bump gravitee-resource-ai-model api ([3786b34](https://github.com/gravitee-io/gravitee-resource-ai-model-text-classification/commit/3786b34a4d068a7f49d2e58ded896b84daba11cc))
+
+
+### BREAKING CHANGES
+
+* **deps:** The model is loaded when the resource starts,
+and it is downloaded by Inference service
+
 # 1.0.0 (2025-06-18)
 
 
