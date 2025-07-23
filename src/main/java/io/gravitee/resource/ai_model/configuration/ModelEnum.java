@@ -41,6 +41,28 @@ public enum ModelEnum {
         "tokenizer.json",
         "config.json"
     ),
+    GRAVITEE_IO_BERT_TINY_TOXICITY(
+        "GRAVITEE_IO_BERT_TINY_TOXICITY",
+        "gravitee-io/bert-tiny-toxicity",
+        "model.quant.onnx",
+        "tokenizer.json",
+        "config.json"
+    ),
+    GRAVITEE_IO_BERT_MINI_TOXICITY(
+        "GRAVITEE_IO_BERT_MINI_TOXICITY",
+        "gravitee-io/bert-mini-toxicity",
+        "model.quant.onnx",
+        "tokenizer.json",
+        "config.json"
+    ),
+    GRAVITEE_IO_BERT_SMALL_TOXICITY(
+        "GRAVITEE_IO_BERT_SMALL_TOXICITY",
+        "gravitee-io/bert-small-toxicity",
+        "model.quant.onnx",
+        "tokenizer.json",
+        "config.json"
+    ),
+
     GRAVITEE_LLAMA_PROMPT_GUARD_22M_MODEL(
         "GRAVITEE_LLAMA_PROMPT_GUARD_22M_MODEL",
         "gravitee-io/Llama-Prompt-Guard-2-22M-onnx",

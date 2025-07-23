@@ -34,6 +34,33 @@
                     "required": ["type"]
                 },
                 {
+                    "title": "gravitee-io/bert-tiny-toxicity",
+                    "properties": {
+                        "type": {
+                            "const": "GRAVITEE_IO_BERT_TINY_TOXICITY"
+                        }
+                    },
+                    "required": ["type"]
+                },
+                {
+                    "title": "gravitee-io/bert-mini-toxicity",
+                    "properties": {
+                        "type": {
+                            "const": "GRAVITEE_IO_BERT_MINI_TOXICITY"
+                        }
+                    },
+                    "required": ["type"]
+                },
+                {
+                    "title": "gravitee-io/bert-small-toxicity",
+                    "properties": {
+                        "type": {
+                            "const": "GRAVITEE_IO_BERT_SMALL_TOXICITY"
+                        }
+                    },
+                    "required": ["type"]
+                },
+                {
                     "title": "gravitee-io/Llama-Prompt-Guard-2-22M-onnx",
                     "properties": {
                         "type": {
