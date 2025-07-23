@@ -40,6 +40,11 @@ The AI model text classification resource provides the following models:
 - link:https://huggingface.co/gravitee-io/Llama-Prompt-Guard-2-22M-onnx[gravitee-io/Llama-Prompt-Guard-2-22M-onnx]
 - link:https://huggingface.co/gravitee-io/Llama-Prompt-Guard-2-86M-onnx[gravitee-io/Llama-Prompt-Guard-2-86M-onnx]
 
+In addition to the models above, we've added 3 new lightweight models:
+- link:https://huggingface.co/gravitee-io/bert-tiny-toxicity[gravitee-io/bert-tiny-toxicity]
+- link:https://huggingface.co/gravitee-io/bert-mini-toxicity[gravitee-io/bert-mini-toxcity]
+- link:https://huggingface.co/gravitee-io/bert-small-toxicity[gravitee-io/bert-small-toxcity]
+
 NOTE: The models are not included in the resource package. The resource automatically downloads the models from Hugging Face when they are not available locally. The Models files are stored in `$GRAVITEE_HOME/models` directory. Ensure that the user that runs the Gateway can write in that directory.
 
 WARNING: Models are loaded in memory. You may need to increase the memory (Java Heap size and Kubernetes resource limits) of the Gateway to avoid any OutOfMemory error. The increase depends on the model size and the number of APIs that use the resource.
