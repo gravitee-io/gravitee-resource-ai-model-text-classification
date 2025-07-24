@@ -1,3 +1,10 @@
+# [2.1.0](https://github.com/gravitee-io/gravitee-resource-ai-model-text-classification/compare/2.0.0...2.1.0) (2025-07-24)
+
+
+### Features
+
+* add new bert tiny/mini/small models ([107ac68](https://github.com/gravitee-io/gravitee-resource-ai-model-text-classification/commit/107ac684f2df830935fbc723e2adbe4a0d4f71a6))
+
 # [2.0.0](https://github.com/gravitee-io/gravitee-resource-ai-model-text-classification/compare/1.0.0...2.0.0) (2025-07-02)
 
 
