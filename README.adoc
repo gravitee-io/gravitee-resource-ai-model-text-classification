@@ -17,8 +17,8 @@ The resource is used to fetch and invoke a text classification model for Gravite
 |===
 | AI Model Text Classification Resource plugin | APIM
 
-| 1.x
-| 4.8.x
+| 1.x | 4.8.x
+| 2.x | 4.9.x
 |===
 
 == Notice
@@ -41,6 +41,7 @@ The AI model text classification resource provides the following models:
 - link:https://huggingface.co/gravitee-io/Llama-Prompt-Guard-2-86M-onnx[gravitee-io/Llama-Prompt-Guard-2-86M-onnx]
 
 In addition to the models above, we've added 3 new lightweight models:
+
 - link:https://huggingface.co/gravitee-io/bert-tiny-toxicity[gravitee-io/bert-tiny-toxicity]
 - link:https://huggingface.co/gravitee-io/bert-mini-toxicity[gravitee-io/bert-mini-toxcity]
 - link:https://huggingface.co/gravitee-io/bert-small-toxicity[gravitee-io/bert-small-toxcity]
