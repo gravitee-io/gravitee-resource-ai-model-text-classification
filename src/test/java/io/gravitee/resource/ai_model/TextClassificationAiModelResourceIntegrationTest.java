@@ -54,8 +54,8 @@ class TextClassificationAiModelResourceIntegrationTest {
 
     @AfterEach
     void tearDown() throws Exception {
-        inferenceService.stop();
         resource.doStop();
+        inferenceService.stop();
     }
 
     @Test
@@ -74,9 +74,8 @@ class TextClassificationAiModelResourceIntegrationTest {
             return Math.abs(f1 - f2) < 0.0001f ? 0 : Float.compare(f1, f2);
         };
 
-        Observable
-            .timer(15, TimeUnit.SECONDS)
-            .flatMapSingle(i -> resource.invokeModel(new PromptInput("Nobody asked for your bullsh*t response.")))
+        resource
+            .invokeModel(new PromptInput("Nobody asked for your bullsh*t response."))
             .test()
             .awaitDone(20, TimeUnit.SECONDS)
             .assertComplete()
