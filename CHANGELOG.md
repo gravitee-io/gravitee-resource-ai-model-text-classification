@@ -1,3 +1,10 @@
+## [2.2.1](https://github.com/gravitee-io/gravitee-resource-ai-model-text-classification/compare/2.2.0...2.2.1) (2026-01-08)
+
+
+### Bug Fixes
+
+* **deps:** update gravitee-resource-ai-model-api to 2.2.1 ([f83ba68](https://github.com/gravitee-io/gravitee-resource-ai-model-text-classification/commit/f83ba6846a0b1ab1feda8cfded13edb18efede9c))
+
 # [2.2.0](https://github.com/gravitee-io/gravitee-resource-ai-model-text-classification/compare/2.1.0...2.2.0) (2025-08-27)
 
 
