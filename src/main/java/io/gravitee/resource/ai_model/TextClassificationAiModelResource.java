@@ -36,7 +36,11 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class TextClassificationAiModelResource
-    extends AiTextModelResource<TextClassificationAiModelConfiguration, io.gravitee.inference.api.classifier.ClassifierResults, ClassifierResults> {
+    extends AiTextModelResource<
+        TextClassificationAiModelConfiguration,
+        io.gravitee.inference.api.classifier.ClassifierResults,
+        ClassifierResults
+    > {
 
     private static final String MODEL_NAME = "modelName";
 
