@@ -35,23 +35,23 @@ Returns a single binary classification with confidence scores.
 
 ## Supported Languages
 
-| Language   | Eval F1 (original) | Eval F1 (quantized) |
-|------------|---------------------|----------------------|
-| Russian    | 0.9572              | 0.9609               |
-| English    | 0.9528              | 0.9495               |
-| French     | 0.9446              | 0.9351               |
-| Hindi      | 0.9248              | 0.8940               |
-| Tatar      | 0.9200              | 0.9148               |
-| Ukrainian  | 0.8997              | 0.8988               |
-| German     | 0.8904              | 0.8842               |
-| Japanese   | 0.8658              | 0.8584               |
-| Spanish    | 0.8564              | 0.8439               |
-| Italian    | 0.8223              | 0.8033               |
-| Arabic     | 0.7563              | 0.7535               |
-| Hinglish   | 0.7234              | 0.7260               |
-| Chinese    | 0.6865              | 0.6697               |
-| Amharic    | 0.6513              | 0.6377               |
-| Hebrew     | 0.6455              | 0.6190               |
+| Language   | F1 Score (original model) | F1 Score (optimized, used by Gravitee) |
+|------------|---------------------------|----------------------------------------|
+| Russian    | 0.9572                    | 0.9609                                 |
+| English    | 0.9528                    | 0.9495                                 |
+| French     | 0.9446                    | 0.9351                                 |
+| Hindi      | 0.9248                    | 0.8940                                 |
+| Tatar      | 0.9200                    | 0.9148                                 |
+| Ukrainian  | 0.8997                    | 0.8988                                 |
+| German     | 0.8904                    | 0.8842                                 |
+| Japanese   | 0.8658                    | 0.8584                                 |
+| Spanish    | 0.8564                    | 0.8439                                 |
+| Italian    | 0.8223                    | 0.8033                                 |
+| Arabic     | 0.7563                    | 0.7535                                 |
+| Hinglish   | 0.7234                    | 0.7260                                 |
+| Chinese    | 0.6865                    | 0.6697                                 |
+| Amharic    | 0.6513                    | 0.6377                                 |
+| Hebrew     | 0.6455                    | 0.6190                                 |
 
 ## Performance
 
@@ -62,13 +62,14 @@ Returns a single binary classification with confidence scores.
 
 ## Training
 
-- **Dataset**: [gravitee-io/textdetox-multilingual-toxicity-dataset](https://huggingface.co/datasets/gravitee-io/textdetox-multilingual-toxicity-dataset)
+- **Base model**: [distilbert-base-multilingual-cased](https://huggingface.co/distilbert-base-multilingual-cased)
+- **Training dataset**: [gravitee-io/textdetox-multilingual-toxicity-dataset](https://huggingface.co/datasets/gravitee-io/textdetox-multilingual-toxicity-dataset)
 - **Split**: 85% train / 15% validation per language
 - **Source code**: [gravitee-io-labs/gravitee-distilbert-multilingual-toxicity-classifier](https://github.com/gravitee-io-labs/gravitee-distilbert-multilingual-toxicity-classifier)
 
 ## Limitations
 
-- Binary classification only: no fine-grained toxicity categories (use MiniLMv2 or Detoxify for multi-label)
+- Binary classification only: no fine-grained toxicity categories (use Detoxify for multilingual multi-label, or MiniLMv2 for English-only multi-label)
 - Performance varies significantly by language (F1 range: 0.62 to 0.96)
 - Weaker on low-resource languages (Hebrew, Amharic, Chinese)
-- Quantized version shows minor F1 degradation (up to -0.03)
+- Optimized version shows minor F1 degradation (up to -0.03)

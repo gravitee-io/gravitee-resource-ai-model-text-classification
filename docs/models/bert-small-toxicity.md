@@ -14,7 +14,7 @@
 
 ## Purpose
 
-Mid-range binary toxicity classifier. The largest model in the Gravitee BERT toxicity family, providing the best accuracy of the three lightweight BERT variants while remaining significantly smaller than DistilBERT.
+Mid-range binary toxicity classifier. The largest model in the Gravitee BERT toxicity family, providing the best average accuracy of the three lightweight BERT variants while remaining significantly smaller than DistilBERT.
 
 Part of the Gravitee BERT toxicity model family (tiny / mini / small) offering a size-accuracy tradeoff.
 
@@ -35,23 +35,23 @@ Returns a single binary classification with confidence scores.
 
 ## Supported Languages
 
-| Language   | Eval F1 (original) | Eval F1 (quantized) |
-|------------|---------------------|----------------------|
-| English    | 0.9626              | 0.9609               |
-| French     | 0.9079              | 0.9120               |
-| Russian    | 0.9049              | 0.8959               |
-| Hindi      | 0.8880              | 0.8865               |
-| German     | 0.8868              | 0.8820               |
-| Ukrainian  | 0.8800              | 0.8799               |
-| Tatar      | 0.8368              | 0.8285               |
-| Italian    | 0.8247              | 0.8263               |
-| Spanish    | 0.8177              | 0.8220               |
-| Japanese   | 0.7305              | 0.7165               |
-| Hinglish   | 0.7239              | 0.7188               |
-| Arabic     | 0.6884              | 0.6719               |
-| Amharic    | 0.6267              | 0.6300               |
-| Chinese    | 0.6152              | 0.6108               |
-| Hebrew     | 0.5701              | 0.5631               |
+| Language   | F1 Score (original model) | F1 Score (optimized, used by Gravitee) |
+|------------|---------------------------|----------------------------------------|
+| English    | 0.9626                    | 0.9609                                 |
+| French     | 0.9079                    | 0.9120                                 |
+| Russian    | 0.9049                    | 0.8959                                 |
+| Hindi      | 0.8880                    | 0.8865                                 |
+| German     | 0.8868                    | 0.8820                                 |
+| Ukrainian  | 0.8800                    | 0.8799                                 |
+| Tatar      | 0.8368                    | 0.8285                                 |
+| Italian    | 0.8247                    | 0.8263                                 |
+| Spanish    | 0.8177                    | 0.8220                                 |
+| Japanese   | 0.7305                    | 0.7165                                 |
+| Hinglish   | 0.7239                    | 0.7188                                 |
+| Arabic     | 0.6884                    | 0.6719                                 |
+| Amharic    | 0.6267                    | 0.6300                                 |
+| Chinese    | 0.6152                    | 0.6108                                 |
+| Hebrew     | 0.5701                    | 0.5631                                 |
 
 ## Performance
 
@@ -63,7 +63,7 @@ Returns a single binary classification with confidence scores.
 ## Training
 
 - **Base model**: [prajjwal1/bert-small](https://huggingface.co/prajjwal1/bert-small)
-- **Dataset**: [gravitee-io/textdetox-multilingual-toxicity-dataset](https://huggingface.co/datasets/gravitee-io/textdetox-multilingual-toxicity-dataset)
+- **Training dataset**: [gravitee-io/textdetox-multilingual-toxicity-dataset](https://huggingface.co/datasets/gravitee-io/textdetox-multilingual-toxicity-dataset)
 - **Split**: 85% train / 15% validation per language
 
 ## Limitations
@@ -71,4 +71,4 @@ Returns a single binary classification with confidence scores.
 - Base model pre-trained primarily on English: multilingual transfer is limited
 - Binary classification only: no fine-grained toxicity categories
 - Notable overfitting on some languages (Spanish delta: -0.124, Italian: -0.116, Hindi: -0.144)
-- Still weaker than DistilBERT on most languages despite being ~29% of its size
+- Still weaker than DistilBERT on most languages (expected given its smaller size: ~29% of DistilBERT)

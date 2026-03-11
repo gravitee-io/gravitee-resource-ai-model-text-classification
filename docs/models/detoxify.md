@@ -70,25 +70,15 @@ Each label returns an independent score between 0 and 1. Multiple labels can be 
 
 ## Performance
 
-### Original Model (threshold: 0.5)
+Threshold: 0.5
 
-| Metric         | Score  |
-|----------------|--------|
-| **Accuracy**   | 0.8845 |
-| **Precision**  | 0.6073 |
-| **Recall**     | 0.7041 |
-| **F1**         | 0.6521 |
-| **AUC-ROC**    | 0.9345 |
-
-### Quantized Model (threshold: 0.5)
-
-| Metric         | Score  |
-|----------------|--------|
-| **Accuracy**   | 0.8880 |
-| **Precision**  | 0.6408 |
-| **Recall**     | 0.6179 |
-| **F1**         | 0.6291 |
-| **AUC-ROC**    | 0.9306 |
+| Metric         | Original model | Optimized (used by Gravitee) |
+|----------------|----------------|------------------------------|
+| **Accuracy**   | 0.8845         | 0.8880                       |
+| **Precision**  | 0.6073         | 0.6408                       |
+| **Recall**     | 0.7041         | 0.6179                       |
+| **F1**         | 0.6521         | 0.6291                       |
+| **AUC-ROC**    | 0.9345         | 0.9306                       |
 
 - **Memory footprint**: High (~300M parameters)
 - **Relative latency**: Slow (largest toxicity model available)
@@ -101,5 +91,5 @@ Each label returns an independent score between 0 and 1. Multiple labels can be 
 ## Limitations
 
 - Largest model in the toxicity category: highest memory usage and latency
-- Quantized version shows slightly lower AUC-ROC (0.9306 vs 0.9345) compared to the original
+- Optimized version shows slightly lower AUC-ROC (0.9306 vs 0.9345) compared to the original
 - 7 languages only: no support for Arabic, Chinese, Hindi, Japanese, German, or other languages

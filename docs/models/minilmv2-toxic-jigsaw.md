@@ -9,7 +9,7 @@
 | **Objective**      | Toxicity Detection (multi-label)                                                                       |
 | **Architecture**   | MiniLMv2-L6-H384 (distilled from BERT-Large)                                                          |
 | **Parameters**     | 23M                                                                                                    |
-| **Inference Format**| ONNX (int8 quantized)                                                                                 |
+| **Inference Format**| ONNX (quantized)                                                                                      |
 | **Max Sequence**   | 256 tokens                                                                                             |
 | **License**        | Apache 2.0                                                                                             |
 
@@ -44,16 +44,16 @@ Each label returns an independent score between 0 and 1. Multiple labels can be 
 
 ## Performance
 
-| Metric               | Teacher (toxic-bert) | Student (this model) |
-|----------------------|----------------------|----------------------|
-| **ROC-AUC (test)**   | 0.9864               | 0.9813               |
+| Metric               | Original model | Optimized (used by Gravitee) |
+|----------------------|----------------|------------------------------|
+| **ROC-AUC (test)**   | 0.9864         | 0.9813                       |
 
-- **Memory footprint**: Low (~23M parameters, quantized)
+- **Memory footprint**: Low (~23M parameters)
 - **Relative latency**: Fast (smallest model with multi-label output)
 
 ## Training
 
-- **Dataset**: [Jigsaw Toxic Comment Classification Challenge](https://www.kaggle.com/c/jigsaw-toxic-comment-classification-challenge) (Kaggle)
+- **Training dataset**: [Jigsaw Toxic Comment Classification Challenge](https://www.kaggle.com/c/jigsaw-toxic-comment-classification-challenge) (Kaggle)
 - **Method**: Knowledge distillation from unitary/toxic-bert
 - **Hyperparameters**: lr=6e-05, batch_size=48, epochs=10, warmup_ratio=0.1
 
