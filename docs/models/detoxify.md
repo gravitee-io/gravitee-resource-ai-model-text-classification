@@ -26,17 +26,35 @@ Based on XLM-RoBERTa, it supports toxicity detection across 7 languages and outp
 
 ## Labels / Tags
 
+### Toxicity labels
+
 | Label              | Description                                                        |
 |--------------------|--------------------------------------------------------------------|
 | `toxicity`         | Generally toxic or rude content                                    |
 | `severe_toxicity`  | Extremely toxic content with strong harmful intent                 |
 | `obscene`          | Profane or vulgar language                                         |
-| `threat`           | Content containing threats of violence or harm                     |
-| `insult`           | Personally insulting or demeaning language                         |
 | `identity_attack`  | Hateful content targeting identity groups (race, religion, gender) |
+| `insult`           | Personally insulting or demeaning language                         |
+| `threat`           | Content containing threats of violence or harm                     |
 | `sexual_explicit`  | Sexually explicit content                                          |
 
-Each label returns an independent score between 0 and 1. Multiple labels can be active simultaneously (multi-label classification).
+### Demographic attribute labels
+
+These labels indicate which demographic group is targeted by the toxic content.
+
+| Label                          | Description                                      |
+|--------------------------------|--------------------------------------------------|
+| `male`                         | Content targeting males                          |
+| `female`                       | Content targeting females                        |
+| `homosexual_gay_or_lesbian`    | Content targeting homosexual/gay/lesbian people  |
+| `christian`                    | Content targeting Christians                     |
+| `jewish`                       | Content targeting Jewish people                  |
+| `muslim`                       | Content targeting Muslims                        |
+| `black`                        | Content targeting Black people                   |
+| `white`                        | Content targeting White people                   |
+| `psychiatric_or_mental_illness`| Content targeting people with mental illness     |
+
+Each label returns an independent score between 0 and 1. Multiple labels can be active simultaneously (16 labels total, multi-label classification).
 
 ## Supported Languages
 
