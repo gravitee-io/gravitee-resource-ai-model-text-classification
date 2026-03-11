@@ -17,7 +17,7 @@
 
 Binary classifier designed to detect prompt injection and jailbreak attempts in user input. This model identifies whether a prompt is trying to override, bypass, or manipulate the instructions given to an LLM.
 
-This is the lighter variant of the Prompt Guard family, offering faster inference at a minor accuracy cost compared to the 86M version.
+This is the lighter variant of the Prompt Guard family, offering faster inference at a minor accuracy cost compared to the 86M **original model**. Note that for the optimized ONNX version used by Gravitee, the 22M actually outperforms the 86M (see [Llama Prompt Guard 86M](llama-prompt-guard-86m.md)).
 
 ## Use Cases
 
@@ -52,19 +52,22 @@ The 22M variant has a **larger performance gap on non-English data** compared to
 
 ## Performance
 
-| Variant      | Accuracy | Precision | Recall | F1     | AUC-ROC |
-|--------------|----------|-----------|--------|--------|---------|
-| **Original** | 0.9564   | 0.9888    | 0.9249 | 0.9558 | 0.9234  |
-| **Quantized**| 0.9579   | 0.9967    | 0.9204 | 0.9449 | 0.9180  |
+| Metric        | Original model | Optimized (used by Gravitee) |
+|---------------|----------------|------------------------------|
+| **Accuracy**  | 0.9564         | 0.9579                       |
+| **Precision** | 0.9888         | 0.9967                       |
+| **Recall**    | 0.9249         | 0.9204                       |
+| **F1**        | 0.9558         | 0.9449                       |
+| **AUC-ROC**   | 0.9234         | 0.9180                       |
 
 - **Memory footprint**: Low
 - **Relative latency**: Fast (~19.3ms per classification on A100 GPU)
 - **Context window**: 512 tokens (split longer inputs into segments)
 
-## Training
+## Training & Evaluation
 
-- **Base model**: [meta-llama/Llama-Prompt-Guard-2-22M](https://huggingface.co/meta-llama/Llama-Prompt-Guard-2-22M)
-- **Dataset**: [jackhhao/jailbreak-classification](https://huggingface.co/datasets/jackhhao/jailbreak-classification)
+- **Base model**: [meta-llama/Llama-Prompt-Guard-2-22M](https://huggingface.co/meta-llama/Llama-Prompt-Guard-2-22M) (pre-trained by Meta, not re-trained)
+- **Evaluation dataset**: [jackhhao/jailbreak-classification](https://huggingface.co/datasets/jackhhao/jailbreak-classification)
 - **ONNX conversion**: By Gravitee.io
 
 ## Limitations
@@ -73,4 +76,4 @@ The 22M variant has a **larger performance gap on non-English data** compared to
 - Weaker on non-English prompts compared to the 86M variant
 - Focused on **explicit** attack patterns: may not catch subtle or novel injection techniques
 - Domain-specific fine-tuning is recommended by Meta for production use to reduce false positives
-- Quantized version shows minimal performance impact (unlike the 86M quantized variant)
+- Optimized version shows minimal performance impact (unlike the 86M optimized variant)

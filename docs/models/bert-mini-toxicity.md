@@ -14,7 +14,7 @@
 
 ## Purpose
 
-Lightweight binary toxicity classifier. The middle-ground model in the Gravitee BERT toxicity family, offering improved accuracy over BERT-tiny with a still-modest memory footprint.
+Lightweight binary toxicity classifier. The middle-ground model in the Gravitee BERT toxicity family, offering improved accuracy over BERT-tiny on most languages with a still-modest memory footprint.
 
 Part of the Gravitee BERT toxicity model family (tiny / mini / small) offering a size-accuracy tradeoff.
 
@@ -35,23 +35,23 @@ Returns a single binary classification with confidence scores.
 
 ## Supported Languages
 
-| Language   | Eval F1 (original) | Eval F1 (quantized) |
-|------------|---------------------|----------------------|
-| English    | 0.9558              | 0.9557               |
-| French     | 0.8986              | 0.8993               |
-| German     | 0.8730              | 0.8750               |
-| Hindi      | 0.8692              | 0.8663               |
-| Russian    | 0.8366              | 0.8319               |
-| Ukrainian  | 0.8150              | 0.8016               |
-| Spanish    | 0.8072              | 0.7837               |
-| Italian    | 0.8041              | 0.8011               |
-| Tatar      | 0.7994              | 0.7937               |
-| Japanese   | 0.7617              | 0.7594               |
-| Hinglish   | 0.7401              | 0.7238               |
-| Arabic     | 0.6754              | 0.6788               |
-| Amharic    | 0.6397              | 0.6410               |
-| Chinese    | 0.6342              | 0.6328               |
-| Hebrew     | 0.4444              | 0.4094               |
+| Language   | F1 Score (original model) | F1 Score (optimized, used by Gravitee) |
+|------------|---------------------------|----------------------------------------|
+| English    | 0.9558                    | 0.9557                                 |
+| French     | 0.8986                    | 0.8993                                 |
+| German     | 0.8730                    | 0.8750                                 |
+| Hindi      | 0.8692                    | 0.8663                                 |
+| Russian    | 0.8366                    | 0.8319                                 |
+| Ukrainian  | 0.8150                    | 0.8016                                 |
+| Spanish    | 0.8072                    | 0.7837                                 |
+| Italian    | 0.8041                    | 0.8011                                 |
+| Tatar      | 0.7994                    | 0.7937                                 |
+| Japanese   | 0.7617                    | 0.7594                                 |
+| Hinglish   | 0.7401                    | 0.7238                                 |
+| Arabic     | 0.6754                    | 0.6788                                 |
+| Amharic    | 0.6397                    | 0.6410                                 |
+| Chinese    | 0.6342                    | 0.6328                                 |
+| Hebrew     | 0.4444                    | 0.4094                                 |
 
 ## Performance
 
@@ -63,7 +63,7 @@ Returns a single binary classification with confidence scores.
 ## Training
 
 - **Base model**: [prajjwal1/bert-mini](https://huggingface.co/prajjwal1/bert-mini)
-- **Dataset**: [gravitee-io/textdetox-multilingual-toxicity-dataset](https://huggingface.co/datasets/gravitee-io/textdetox-multilingual-toxicity-dataset)
+- **Training dataset**: [gravitee-io/textdetox-multilingual-toxicity-dataset](https://huggingface.co/datasets/gravitee-io/textdetox-multilingual-toxicity-dataset)
 - **Split**: 85% train / 15% validation per language
 
 ## Limitations

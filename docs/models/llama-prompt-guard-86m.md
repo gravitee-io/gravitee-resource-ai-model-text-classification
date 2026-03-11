@@ -15,16 +15,15 @@
 
 ## Purpose
 
-Binary classifier designed to detect prompt injection and jailbreak attempts in user input. This is the larger, more accurate variant of the Prompt Guard family, providing the highest detection accuracy especially on multilingual inputs.
+Binary classifier designed to detect prompt injection and jailbreak attempts in user input. This is the larger variant of the Prompt Guard family. The original model offers the highest detection accuracy, but the optimized ONNX version used by Gravitee suffers from significant degradation (see Performance section).
 
-This model is the **recommended choice for prompt injection detection** when accuracy is the priority.
+For the optimized version, the **22M variant actually outperforms the 86M** on accuracy and F1. Consider using the 22M unless you need the original model's full-precision performance.
 
 ## Use Cases
 
-- Maximum-accuracy prompt injection and jailbreak detection
+- Deployments using the original (non-optimized) model where maximum accuracy is needed
 - Multilingual API gateways where non-English injection attempts are expected
-- Security-critical deployments where false negatives (missed attacks) must be minimized
-- Production environments protecting high-value LLM applications
+- Environments where the higher memory cost is acceptable
 
 ## Labels / Tags
 
@@ -48,30 +47,33 @@ Returns a binary classification with confidence scores.
 | Spanish    |
 | Thai       |
 
-The 86M variant has **better multilingual performance** than the 22M version thanks to the larger DeBERTa-v2 architecture.
+The 86M original model has **better multilingual performance** than the 22M version thanks to its larger architecture. However, this advantage is reduced in the optimized ONNX version.
 
 ## Performance
 
-| Variant      | Accuracy | Precision | Recall | F1     | AUC-ROC |
-|--------------|----------|-----------|--------|--------|---------|
-| **Original** | 0.9801   | 0.9984    | 0.9625 | 0.9801 | 0.9519  |
-| **Quantized**| 0.8989   | 1.0000    | 0.8018 | 0.8900 | 0.7452  |
+| Metric        | Original model | Optimized (used by Gravitee) |
+|---------------|----------------|------------------------------|
+| **Accuracy**  | 0.9801         | 0.8989                       |
+| **Precision** | 0.9984         | 1.0000                       |
+| **Recall**    | 0.9625         | 0.8018                       |
+| **F1**        | 0.9801         | 0.8900                       |
+| **AUC-ROC**   | 0.9519         | 0.7452                       |
+
+> **Warning**: The optimized version shows **significant accuracy degradation** compared to the original model. The 22M variant does not suffer from this issue.
 
 - **Memory footprint**: High (~300M in ONNX F32)
 - **Relative latency**: Medium
 - **Context window**: 512 tokens (split longer inputs into segments)
 
-> **Warning**: The quantized version shows **significant accuracy degradation** (~8% accuracy drop, AUC-ROC drops from 0.95 to 0.75). If accuracy is critical, consider the trade-off carefully.
+## Training & Evaluation
 
-## Training
-
-- **Base model**: [meta-llama/Llama-Prompt-Guard-2-86M](https://huggingface.co/meta-llama/Llama-Prompt-Guard-2-86M)
-- **Dataset**: [jackhhao/jailbreak-classification](https://huggingface.co/datasets/jackhhao/jailbreak-classification)
+- **Base model**: [meta-llama/Llama-Prompt-Guard-2-86M](https://huggingface.co/meta-llama/Llama-Prompt-Guard-2-86M) (pre-trained by Meta, not re-trained)
+- **Evaluation dataset**: [jackhhao/jailbreak-classification](https://huggingface.co/datasets/jackhhao/jailbreak-classification)
 - **ONNX conversion**: By Gravitee.io
 
 ## Limitations
 
-- **Quantized version has significant accuracy loss**: recall drops to 0.80 and AUC-ROC to 0.75
+- **Optimized version has significant accuracy loss**: recall drops to 0.80 and AUC-ROC to 0.75
 - 512 token context window: longer prompts must be split into segments
 - Highest memory usage of the Prompt Guard family
 - Focused on **explicit** attack patterns: may not catch subtle or novel injection techniques

@@ -36,23 +36,23 @@ Returns a single binary classification with confidence scores.
 
 ## Supported Languages
 
-| Language   | Eval F1 (original) | Eval F1 (quantized) |
-|------------|---------------------|----------------------|
-| English    | 0.9421              | 0.9423               |
-| French     | 0.8768              | 0.8768               |
-| German     | 0.8728              | 0.8726               |
-| Hindi      | 0.8452              | 0.8429               |
-| Italian    | 0.8056              | 0.8066               |
-| Spanish    | 0.7841              | 0.7826               |
-| Japanese   | 0.7456              | 0.7503               |
-| Ukrainian  | 0.6891              | 0.6891               |
-| Hinglish   | 0.6882              | 0.6971               |
-| Russian    | 0.6884              | 0.6932               |
-| Amharic    | 0.6488              | 0.6474               |
-| Tatar      | 0.6446              | 0.6421               |
-| Arabic     | 0.6445              | 0.6445               |
-| Chinese    | 0.6404              | 0.6405               |
-| Hebrew     | 0.5149              | 0.5075               |
+| Language   | F1 Score (original model) | F1 Score (optimized, used by Gravitee) |
+|------------|---------------------------|----------------------------------------|
+| English    | 0.9421                    | 0.9423                                 |
+| French     | 0.8768                    | 0.8768                                 |
+| German     | 0.8728                    | 0.8726                                 |
+| Hindi      | 0.8452                    | 0.8429                                 |
+| Italian    | 0.8056                    | 0.8066                                 |
+| Spanish    | 0.7841                    | 0.7826                                 |
+| Japanese   | 0.7456                    | 0.7503                                 |
+| Ukrainian  | 0.6891                    | 0.6891                                 |
+| Hinglish   | 0.6882                    | 0.6971                                 |
+| Russian    | 0.6884                    | 0.6932                                 |
+| Amharic    | 0.6488                    | 0.6474                                 |
+| Tatar      | 0.6446                    | 0.6421                                 |
+| Arabic     | 0.6445                    | 0.6445                                 |
+| Chinese    | 0.6404                    | 0.6405                                 |
+| Hebrew     | 0.5149                    | 0.5075                                 |
 
 ## Performance
 
@@ -64,7 +64,7 @@ Returns a single binary classification with confidence scores.
 ## Training
 
 - **Base model**: [prajjwal1/bert-tiny](https://huggingface.co/prajjwal1/bert-tiny)
-- **Dataset**: [gravitee-io/textdetox-multilingual-toxicity-dataset](https://huggingface.co/datasets/gravitee-io/textdetox-multilingual-toxicity-dataset)
+- **Training dataset**: [gravitee-io/textdetox-multilingual-toxicity-dataset](https://huggingface.co/datasets/gravitee-io/textdetox-multilingual-toxicity-dataset)
 - **Split**: 85% train / 15% validation per language
 
 ## Limitations
@@ -72,4 +72,4 @@ Returns a single binary classification with confidence scores.
 - Lowest accuracy of the BERT family, especially on non-European languages
 - Base model (bert-tiny) was pre-trained primarily on English: multilingual transfer is limited
 - Binary classification only: no fine-grained toxicity categories
-- Significant accuracy gap between English (0.94) and low-resource languages (Hebrew: 0.51)
+- Significant accuracy gap between English (0.94) and low-resource languages (Hebrew: 0.52)
