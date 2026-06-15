@@ -35,7 +35,7 @@
     <description>The resource is used to fetch and invoke a text classification model for Gravitee Policy</description>
 
     <properties>
-        <gravitee-bom.version>8.3.61</gravitee-bom.version>
+        <gravitee-bom.version>8.3.62</gravitee-bom.version>
         <gravitee-common.version>4.9.1</gravitee-common.version>
         <gravitee-node.version>7.26.4</gravitee-node.version>
         <gravitee-resource-api.version>1.1.0</gravitee-resource-api.version>
