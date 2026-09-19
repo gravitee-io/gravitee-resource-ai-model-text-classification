@@ -12,14 +12,16 @@ endif::[]
 
 The resource is used to fetch and invoke a text classification model for Gravitee gateway policies. Models are fetched from Hugging Face.
 
-== Compatibility
+== Compatibility matrix
 
 |===
-| AI Model Text Classification Resource plugin | APIM
+| Plugin version | APIM            | Java version
 
-| 1.x | 4.8.x
-| 2.x | 4.9.x
+| 2.x            | 4.9.x to latest | 21
+| 1.x            | 4.8.x           | 21
 |===
+
+The *Java version* column is the bytecode level of the latest release of each line, which sets the minimum runtime able to load the artifact.
 
 == Notice
 
