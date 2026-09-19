@@ -38,3 +38,4 @@ graviteebot.gpg.pub.key
 .secrets.json
 
 .java-version
+.DS_Store
