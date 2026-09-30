@@ -8,6 +8,13 @@
             "oneOf": [
                 {
                     "title": "minuva/MiniLMv2-toxic-jigsaw-onnx",
+                    "description": "Detects 6 categories of toxic content (toxic, severe toxic, obscene, threat, insult, identity hate) in English text.",
+                    "gioConfig": {
+                        "banner": {
+                            "title": "Toxicity detection - multi-label - English only - 23M parameters",
+                            "text": "Low memory and fast. Choose it when you need to know the kind of toxicity and your traffic is in English.<br>Trained on Wikipedia comments: may generalize poorly to slang, code or technical content. Each label may need its own threshold.<br><a href=\"https://huggingface.co/minuva/MiniLMv2-toxic-jigsaw-onnx\" target=\"_blank\">Model card</a>"
+                        }
+                    },
                     "properties": {
                         "type": {
                             "const": "MINILMV2_TOXIC_JIGSAW_MODEL"
@@ -17,6 +24,13 @@
                 },
                 {
                     "title": "gravitee-io/detoxify-onnx",
+                    "description": "Detects 7 categories of toxic content (toxicity, severe toxicity, obscene, identity attack, insult, threat, sexual explicit) in 7 languages.",
+                    "gioConfig": {
+                        "banner": {
+                            "title": "Toxicity detection - multi-label - multilingual - 300M parameters",
+                            "text": "Most detailed toxicity model. Choose it for mixed-language traffic when you need to know the kind of toxicity and memory is not a constraint.<br>Largest toxicity model: highest memory usage and latency. Not supported: Arabic, Chinese, Hindi, Japanese, German.<br><a href=\"https://huggingface.co/gravitee-io/detoxify-onnx\" target=\"_blank\">Model card</a>"
+                        }
+                    },
                     "properties": {
                         "type": {
                             "const": "GRAVITEE_DETOXIFY_ONNX_MODEL"
@@ -26,6 +40,13 @@
                 },
                 {
                     "title": "gravitee-io/distilbert-multilingual-toxicity-classifier",
+                    "description": "Recommended for multilingual traffic: classifies text as toxic or not toxic in 15 languages.",
+                    "gioConfig": {
+                        "banner": {
+                            "title": "Toxicity detection - binary - multilingual - 100M parameters",
+                            "text": "Best balance between language coverage, accuracy and size. Medium memory and latency.<br>Weaker on Hebrew, Amharic and Chinese. Use Detoxify if you need the kind of toxicity.<br><a href=\"https://huggingface.co/gravitee-io/distilbert-multilingual-toxicity-classifier\" target=\"_blank\">Model card</a>"
+                        }
+                    },
                     "properties": {
                         "type": {
                             "const": "GRAVITEE_IO_DISTILBERT_MULTILINGUAL_TOXICITY_CLASSIFIER"
@@ -35,6 +56,13 @@
                 },
                 {
                     "title": "gravitee-io/bert-tiny-toxicity",
+                    "description": "Smallest and fastest model: classifies text as toxic or not toxic.",
+                    "gioConfig": {
+                        "banner": {
+                            "title": "Toxicity detection - binary - multilingual - 4.4M parameters",
+                            "text": "Choose it when memory or latency is critical, or for development environments. Good on English, French and German.<br>Lowest accuracy of the BERT family (tiny, mini, small), especially outside European languages.<br><a href=\"https://huggingface.co/gravitee-io/bert-tiny-toxicity\" target=\"_blank\">Model card</a>"
+                        }
+                    },
                     "properties": {
                         "type": {
                             "const": "GRAVITEE_IO_BERT_TINY_TOXICITY"
@@ -44,6 +72,13 @@
                 },
                 {
                     "title": "gravitee-io/bert-mini-toxicity",
+                    "description": "Lightweight model that classifies text as toxic or not toxic, more accurate than bert-tiny.",
+                    "gioConfig": {
+                        "banner": {
+                            "title": "Toxicity detection - binary - multilingual - 11M parameters",
+                            "text": "Middle ground of the BERT family (tiny, mini, small): low memory, fast. Good on English, French and German.<br>Weak on Hebrew, Chinese and Amharic.<br><a href=\"https://huggingface.co/gravitee-io/bert-mini-toxicity\" target=\"_blank\">Model card</a>"
+                        }
+                    },
                     "properties": {
                         "type": {
                             "const": "GRAVITEE_IO_BERT_MINI_TOXICITY"
@@ -53,6 +88,13 @@
                 },
                 {
                     "title": "gravitee-io/bert-small-toxicity",
+                    "description": "Most accurate lightweight model that classifies text as toxic or not toxic.",
+                    "gioConfig": {
+                        "banner": {
+                            "title": "Toxicity detection - binary - multilingual - 29M parameters",
+                            "text": "Best lightweight option when accuracy matters more than raw speed. Good on English, French, Russian and Hindi.<br>Still less accurate than DistilBERT on most languages. Weak on Hebrew, Chinese and Amharic.<br><a href=\"https://huggingface.co/gravitee-io/bert-small-toxicity\" target=\"_blank\">Model card</a>"
+                        }
+                    },
                     "properties": {
                         "type": {
                             "const": "GRAVITEE_IO_BERT_SMALL_TOXICITY"
@@ -62,6 +104,13 @@
                 },
                 {
                     "title": "gravitee-io/Llama-Prompt-Guard-2-22M-onnx",
+                    "description": "Recommended for prompt security: detects prompt injection and jailbreak attempts.",
+                    "gioConfig": {
+                        "banner": {
+                            "title": "Prompt injection detection - binary - 22M parameters",
+                            "text": "Low memory and fast. More accurate than the 86M variant in the optimized version used by Gravitee.<br>512 tokens context window. Catches explicit attack patterns, may miss subtle or novel techniques.<br><a href=\"https://huggingface.co/gravitee-io/Llama-Prompt-Guard-2-22M-onnx\" target=\"_blank\">Model card</a>"
+                        }
+                    },
                     "properties": {
                         "type": {
                             "const": "GRAVITEE_LLAMA_PROMPT_GUARD_22M_MODEL"
@@ -71,6 +120,13 @@
                 },
                 {
                     "title": "gravitee-io/Llama-Prompt-Guard-2-86M-onnx",
+                    "description": "Detects prompt injection and jailbreak attempts, better on non-English prompts than the 22M variant.",
+                    "gioConfig": {
+                        "banner": {
+                            "title": "Prompt injection detection - binary - 86M parameters",
+                            "text": "High memory usage. The optimized version used by Gravitee loses significant accuracy (recall 0.80): prefer the 22M variant unless you expect non-English attacks.<br>512 tokens context window.<br><a href=\"https://huggingface.co/gravitee-io/Llama-Prompt-Guard-2-86M-onnx\" target=\"_blank\">Model card</a>"
+                        }
+                    },
                     "properties": {
                         "type": {
                             "const": "GRAVITEE_LLAMA_PROMPT_GUARD_86M_MODEL"
