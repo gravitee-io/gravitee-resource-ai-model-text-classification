@@ -1,3 +1,10 @@
+# [2.3.0](https://github.com/gravitee-io/gravitee-resource-ai-model-text-classification/compare/2.2.1...2.3.0) (2026-10-02)
+
+
+### Features
+
+* guide model selection with a description and a banner per model ([e5e9e29](https://github.com/gravitee-io/gravitee-resource-ai-model-text-classification/commit/e5e9e295d4a996f3814570ea29f8c329fed253e5))
+
 ## [2.2.1](https://github.com/gravitee-io/gravitee-resource-ai-model-text-classification/compare/2.2.0...2.2.1) (2026-01-08)
 
 
