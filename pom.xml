@@ -37,7 +37,7 @@
     <properties>
         <gravitee-bom.version>8.3.70</gravitee-bom.version>
         <gravitee-common.version>4.9.3</gravitee-common.version>
-        <gravitee-node.version>7.28.2</gravitee-node.version>
+        <gravitee-node.version>9.17.0</gravitee-node.version>
         <gravitee-resource-api.version>1.1.0</gravitee-resource-api.version>
         <gravitee-resource-ai-model-api.version>2.2.4</gravitee-resource-ai-model-api.version>
         <gravitee-inference-service.version>1.4.2</gravitee-inference-service.version>
